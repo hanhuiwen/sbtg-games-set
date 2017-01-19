@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+
+	<link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <div id="page" class="unselectable">
+        <div id="openFrame" class="view">
+            <h1 id="pepperSurveyStart">Nao Robot Menu</h1>
+            <h1 id="formTitle">by Kokorobot</h1>
+            <p id="formDesc">The application will start soon</p>
+        </div>
+
+        <button id="back_to_main" class="btn blue hidden">main menu</button>
+
+        <div id="main_menu" class="view hidden">
+            <h1 class="question">What should we do today?</h1>
+            <div class="choices unselectable">
+                <div class="answers answerFrame">
+                    <input type="button" class="btn blue fourbtn" id="to_language" value="Language">
+                    <input type="button" class="btn blue fourbtn" id="to_presentation" value="Presentation">
+                    <input type="button" class="btn blue fourbtn" id="to_games" value="Games">
+                </div>
+            </div>
+        </div>
+
+        <div id="language_menu" class="view hidden">
+            <h1 class="question">Language / 言語</h1>
+            <div class="choices unselectable">
+                <div class="answers answerFrame">
+                    <input type="button" class="btn blue twobtn" id="set_english" value="English">
+                    <input type="button" class="btn blue twobtn" id="set_japanese" value="Japanese">
+                </div>
+            </div>
+        </div>
+
+        <div id="games_menu" class="view hidden">
+            <h1 id="question">Choose a game!</h1>
+            <div class="choices unselectable">
+                <div class="answers answerFrame">
+                    <input type="button" class="btn blue fourbtn" id="to_janken" value="Janken">
+                    <input type="button" class="btn blue fourbtn" id="to_tick" value="Tick-Tack-Toe">
+                    <input type="button" class="btn blue fourbtn" id="to_tickle" value="Tickle Me">
+                </div>
+            </div>
+        </div>
+
+	<!-- qimessaging libraries -->
+	<script type="text/javascript" src="/libs/qimessaging/1.0/qimessaging.js"></script>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/jquery.qimhelpers.js"></script>
+	<!-- this application javascript -->
+	<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
