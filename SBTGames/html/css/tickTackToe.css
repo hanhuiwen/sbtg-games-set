@@ -1,0 +1,19 @@
+#tttTitle {
+    margin: 2vh auto;
+}
+
+.cell {
+    height: 18vh;
+    width: 18vh;
+    border: 1px solid black;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.cell > img {
+    height: 100%;
+}
+
+/*#grid {
+    display:
+}*/
