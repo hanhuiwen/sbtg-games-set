@@ -12,8 +12,5 @@
 
 .cell > img {
     height: 100%;
+    vertical-align: middle;
 }
-
-/*#grid {
-    display:
-}*/
