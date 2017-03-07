@@ -20,6 +20,8 @@ var texts = {
     "naoTurn": "Nao's turn"
 }
 
+// Tick Tack Toe code
+
 var whoseTurn = "user";
 var started = false;
 
@@ -85,12 +87,17 @@ function checkFull() {
 function nextTurn() {
     if (started) {
         if (checkWin() != undefined) {
-            console.log("someone won: " + whoseTurn);
+            if (whoseTurn == "user") {
+                playReaction("lose");
+            } else {
+                playReaction("win");
+            }
+            // TODO: css animation!
             console.log(checkWin());
             started = false;
             return;
         } else if (checkFull()) {
-            console.log("draw!");
+            playReaction("draw");
             started = false;
             return;
         }
@@ -110,7 +117,11 @@ function nextTurn() {
         } else {
             $("h1").text(texts["naoTurn"]);
         }
-        setTimeout(naoMove, 2000);
+        if (Math.random() < probabilities.thinking) {
+            playReaction("thinking", naoMove);
+        } else {
+            setTimeout(naoMove, 2000);
+        }
     }
 }
 
@@ -127,13 +138,21 @@ function naoMove() {
     possibleMoves.sort(function sortByScore (a, b) {
         return b[1] - a[1];
     });
+
     if (Math.random() < difficulty) {
-        console.log("chosen move");
         var move = possibleMoves[0];
     } else {
-        console.log("random move");
         var move = possibleMoves[randRange(0, possibleMoves.length)];
     }
+
+    if (Math.random() < probabilities.preplay) {
+        playReaction("preplay", function () {doMove(move);});
+    } else {
+        doMove(move);
+    }
+}
+
+function doMove(move) {
     gameGrid[move[0][0]][move[0][1]] = 2;
     var id = "#" + move[0].join("");
     $(id).html('<img src="img/cross.png" />');
@@ -186,9 +205,55 @@ function userClick (evt) {
         gameGrid[i][j] = 1;
         $target.empty();
         $target.html('<img src="img/circle.png" />');
-        nextTurn();
+        if (Math.random() < probabilities.postplay) {
+            playReaction("postplay", nextTurn);
+        } else {
+            nextTurn();
+        }
     }
 }
+
+// Nao code
+
+var reactions = {
+    "thinking": [ // 8
+        "^start(animations/Stand/Waiting/Think_2) \\rspd=80\\ \\vct=90\\ hmmm. \\vct=110\\ Let me think ^wait(animations/Stand/Waiting/Think_2)",
+        "^start(animations/Stand/Waiting/Think_3) \\rspd=80\\ \\vct=100\\ Maybe if I do this. \\pau=800\\ \\rspd=100\\ or perhaps that? ^wait(animations/Stand/Waiting/Think_3)"
+    ],
+    "postplay": [ // 6
+        "I see. Nicely done!",
+        "hmmm. That was unexpected!"
+    ],
+    "preplay": [ // 5
+        "Aha! What do you say to that!",
+        "\\rspd=50\\ \\vct=90\\ I choose, \\pau=700\\ \\rspd=130\\ \\vct=100\\ this one!"
+    ],
+    "win": [ // 5
+        "I win! ^run(animations/Stand/Emotions/Positive/Winner_1)",
+        "Yes! I win! ^run(animations/Stand/Emotions/Positive/Winner_2)"
+    ],
+    "lose": [ // 4
+        "wow! ^start(animations/Stand/Emotions/Positive/Excited_1) Congratulations! ^wait(animations/Stand/Emotions/Positive/Excited_1)"
+    ],
+    "draw": [ // 2
+        "we should try again to see who wins"
+    ]
+}
+
+probabilities = {
+    "thinking": 0.8,
+    "postplay": 0.5,
+    "preplay": 0.4
+}
+
+function playReaction (type, callback) {
+    var reactionList = reactions[type];
+    var reaction = reactionList[randRange(0, reactionList.length)];
+    $.getService("ALAnimatedSpeech", function (tts) {
+        tts.say(reaction).done(callback);
+    });
+}
+
 
 $(function () {
     $("#grid").on("click", ".cell", userClick);
