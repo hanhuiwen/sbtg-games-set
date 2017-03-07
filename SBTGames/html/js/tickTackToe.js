@@ -88,16 +88,16 @@ function nextTurn() {
     if (started) {
         if (checkWin() != undefined) {
             if (whoseTurn == "user") {
-                playReaction("lose");
+                playReaction("lose", tryAgainQuestion);
             } else {
-                playReaction("win");
+                playReaction("win", tryAgainQuestion);
             }
             // TODO: css animation!
             console.log(checkWin());
             started = false;
             return;
         } else if (checkFull()) {
-            playReaction("draw");
+            playReaction("draw", tryAgainQuestion);
             started = false;
             return;
         }
@@ -233,10 +233,22 @@ var reactions = {
         "Yes! I win! ^run(animations/Stand/Emotions/Positive/Winner_2)"
     ],
     "lose": [ // 4
-        "wow! ^start(animations/Stand/Emotions/Positive/Excited_1) Congratulations! ^wait(animations/Stand/Emotions/Positive/Excited_1)"
+        "wow! ^start(animations/Stand/Emotions/Positive/Excited_1) Congratulations! You win! ^wait(animations/Stand/Emotions/Positive/Excited_1)"
     ],
     "draw": [ // 2
-        "we should try again to see who wins"
+        "It's a draw! we should try again to see who wins"
+    ],
+    "quit": [ // 1
+        "that was fun! let's play again sometimes."
+    ],
+    "again": [ // 1
+        "Ok, let's start again!"
+    ],
+    "start": [ // 1
+        "alright, you start!"
+    ],
+    "play_again_question": [ // 1
+        "do you want to play again?"
     ]
 }
 
@@ -249,12 +261,38 @@ probabilities = {
 function playReaction (type, callback) {
     var reactionList = reactions[type];
     var reaction = reactionList[randRange(0, reactionList.length)];
+    // reinitialize to default just in case
+    reaction = "\\vct=100\\ \\rspd=100\\" + reaction;
     $.getService("ALAnimatedSpeech", function (tts) {
         tts.say(reaction).done(callback);
     });
 }
 
+function backToMenu() {
+    console.log("TODO: back to menu");
+    var href_arr = window.location.href.split("/");
+    href_arr.pop();
+    window.location.href = href_arr.join("/");
+}
+
+function tryAgainQuestion() {
+    $("#ttt_main").addClass("hidden");
+    $("#ttt_play_again").removeClass("hidden");
+    playReaction("play_again_question");
+}
+
 
 $(function () {
     $("#grid").on("click", ".cell", userClick);
+    $(".btn").on("click", function (event) {
+        var id = event.target.id;
+        if (id == "exit_game" || id == "ttt_quit") {
+            playReaction("quit", backToMenu);
+        } else if (id == "ttt_again") {
+            playReaction("again", function () {
+                window.location.reload();
+            });
+        }
+    });
+    playReaction("start", nextTurn);
 });

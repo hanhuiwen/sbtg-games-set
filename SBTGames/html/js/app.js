@@ -16,6 +16,9 @@ function onButtonClick (evt) {
       $("#games_menu").removeClass("hidden");
     }
   }
+  if (id=="to_tick") {
+    window.location.href += "tick-tack-toe.html";
+  }
 }
 
 $(function () {

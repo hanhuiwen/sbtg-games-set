@@ -12,7 +12,17 @@
     <div id="page" class="unselectable">
         <button id="exit_game" class="btn blue">X</button>
 
-        <div class="view">
+        <div id="ttt_play_again" class="view hidden">
+            <h1 class="question">Play Again?</h1>
+            <div class="choices unselectable">
+                <div class="answers answerFrame">
+                    <input type="button" class="btn blue twobtn" id="ttt_again" value="Yes">
+                    <input type="button" class="btn blue twobtn" id="ttt_quit" value="No">
+                </div>
+            </div>
+        </div>
+
+        <div id="ttt_main" class="view">
             <h1 id="tttTitle">Tick-Tack-Toe!</h1>
 
             <div id="grid">
