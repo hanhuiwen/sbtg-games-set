@@ -18,7 +18,35 @@ function onButtonClick (evt) {
   }
   if (id=="to_tick") {
     window.location.href += "tick-tack-toe.html";
+  } else if (id=="set_english") {
+    say("ok", function () { setLanguage("English"); });
+  } else if (id=="set_japanese") {
+    say("ok", function () { setLanguage("Japanese"); });
   }
+}
+
+function say (sentence, callback) {
+  $.getService("ALAnimatedSpeech", function(tts) {
+    tts.say(sentence).done(callback)
+  });
+}
+
+function setLanguage(language) {
+  $.getService("ALTextToSpeech", function(tts) {
+    tts.setLanguage(language).done(function () {
+      if (language=="English") {
+        say("I am now talking in English", function() {$("#back_to_main").click()});
+      } else {
+        say("今から日本語をしゃべります。", function() {$("#back_to_main").click()});
+      }
+    });
+  });
+  $.getService("ALSpeechRecognition", function(asr) {
+    asr.setLanguage(language);
+  });
+  $.getService("ALDialog", function(dialog) {
+    dialog.setLanguage(language);
+  });
 }
 
 $(function () {
