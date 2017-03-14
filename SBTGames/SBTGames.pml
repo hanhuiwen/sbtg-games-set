@@ -20,6 +20,12 @@
         <File name="jquery.qimhelpers" src="html/js/jquery.qimhelpers.js" />
         <File name="tickTackToe" src="html/js/tickTackToe.js" />
         <File name="tick-tack-toe" src="html/tick-tack-toe.html" />
+        <File name="janken" src="html/css/janken.css" />
+        <File name="paper" src="html/img/paper.png" />
+        <File name="rock" src="html/img/rock.png" />
+        <File name="scissors" src="html/img/scissors.png" />
+        <File name="janken" src="html/janken.html" />
+        <File name="janken" src="html/js/janken.js" />
     </Resources>
     <Topics />
     <IgnoredPaths />

@@ -1,0 +1,31 @@
+#jkTitle {
+    margin: 2vh auto;
+}
+
+
+.jk_choice {
+    width: 18vw;
+    height: 18vw;
+    margin-left: 3vw;
+    background-color: #FFF !important;
+}
+
+.jk_stone {
+    background: url('../img/rock.png') no-repeat;
+    background-size: cover !important;
+}
+
+.jk_scissors {
+    background: url('../img/scissors.png') no-repeat;
+    background-size: cover !important;
+}
+
+.jk_paper {
+    background: url('../img/paper.png') no-repeat;
+    background-size: cover !important;
+}
+
+.jk_selected {
+    border: 10px solid black;
+}
+

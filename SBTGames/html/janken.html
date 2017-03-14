@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/janken.css" rel="stylesheet">
+</head>
+<body>
+
+    <div id="page" class="unselectable">
+        <button id="exit_game" class="btn blue">X</button>
+
+        <div id="ttt_play_again" class="view hidden">
+            <h1 class="question">Play Again?</h1>
+            <div class="choices unselectable">
+                <div class="answers answerFrame">
+                    <input type="button" class="btn blue twobtn" id="ttt_again" value="Yes">
+                    <input type="button" class="btn blue twobtn" id="ttt_quit" value="No">
+                </div>
+            </div>
+        </div>
+
+        <div id="jk_main" class="view">
+            <h1 id="jkTitle">Janken</h1>
+
+            <div class="choices unselectable">
+                <div class="answers answerFrame">
+                    <input type="button" class="jk_choice jk_stone" id="jk_stone" value="">
+                    <input type="button" class="jk_choice jk_scissors" id="jk_scissors" value="">
+                    <input type="button" class="jk_choice jk_paper" id="jk_paper" value="">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- qimessaging libraries -->
+    <script type="text/javascript" src="/libs/qimessaging/1.0/qimessaging.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery.qimhelpers.js"></script>
+    <!-- this application javascript -->
+    <script type="text/javascript" src="js/janken.js"></script>
+</body>
+</html>

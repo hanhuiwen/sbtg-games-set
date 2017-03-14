@@ -269,7 +269,6 @@ function playReaction (type, callback) {
 }
 
 function backToMenu() {
-    console.log("TODO: back to menu");
     var href_arr = window.location.href.split("/");
     href_arr.pop();
     window.location.href = href_arr.join("/");

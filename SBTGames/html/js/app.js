@@ -18,6 +18,8 @@ function onButtonClick (evt) {
   }
   if (id=="to_tick") {
     window.location.href += "tick-tack-toe.html";
+  } else if (id=="to_janken") {
+    window.location.href += "janken.html";
   } else if (id=="set_english") {
     say("ok", function () { setLanguage("English"); });
   } else if (id=="set_japanese") {
