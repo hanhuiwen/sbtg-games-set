@@ -3,6 +3,8 @@
     <Manifest src="manifest.xml" />
     <BehaviorDescriptions>
         <BehaviorDescription name="behavior" src="main" xar="behavior.xar" />
+        <BehaviorDescription name="behavior" src="animations/janken" xar="behavior.xar" />
+        <BehaviorDescription name="behavior" src="animations/janken_repeat" xar="behavior.xar" />
     </BehaviorDescriptions>
     <Dialogs />
     <Resources>
@@ -26,6 +28,13 @@
         <File name="scissors" src="html/img/scissors.png" />
         <File name="janken" src="html/janken.html" />
         <File name="janken" src="html/js/janken.js" />
+        <File name="animate" src="html/css/animate.css" />
+        <File name="draw" src="html/img/draw.png" />
+        <File name="naoWin" src="html/img/naoWin.png" />
+        <File name="paper2" src="html/img/paper2.png" />
+        <File name="rock2" src="html/img/rock2.png" />
+        <File name="scissors2" src="html/img/scissors2.png" />
+        <File name="userWin" src="html/img/userWin.png" />
     </Resources>
     <Topics />
     <IgnoredPaths />

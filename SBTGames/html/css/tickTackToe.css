@@ -14,3 +14,13 @@
     height: 100%;
     vertical-align: middle;
 }
+
+.cross {
+    background: url('../img/cross.png') no-repeat;
+    background-size: cover !important;
+}
+
+.circle {
+    background: url('../img/circle.png') no-repeat;
+    background-size: cover !important;
+}

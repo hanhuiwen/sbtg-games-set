@@ -51,7 +51,7 @@ div.view {
 }
 
 h1 {
-    font-size: 18vh;
+    font-size: 8vw;
     height: 25%;
     margin: 4vh auto;
 }
@@ -131,7 +131,7 @@ p {
   -webkit-border-radius: 10;
   -moz-border-radius: 10;
   border-radius: 10px;
-  font-size: 10vh;
+  font-size: 5vw;
   padding: 1% 2%;
   border: solid #fcfeff 6px;
   text-decoration: none;

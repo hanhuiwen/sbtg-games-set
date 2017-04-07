@@ -155,7 +155,8 @@ function naoMove() {
 function doMove(move) {
     gameGrid[move[0][0]][move[0][1]] = 2;
     var id = "#" + move[0].join("");
-    $(id).html('<img src="img/cross.png" />');
+    // $(id).html('<img src="img/cross.png" />');
+    $(id).addClass("cross");
     nextTurn();
 }
 
@@ -204,7 +205,8 @@ function userClick (evt) {
     if (gameGrid[i][j]==0) {
         gameGrid[i][j] = 1;
         $target.empty();
-        $target.html('<img src="img/circle.png" />');
+        $target.addClass("circle");
+        // $target.html('<img src="img/circle.png" />');
         if (Math.random() < probabilities.postplay) {
             playReaction("postplay", nextTurn);
         } else {

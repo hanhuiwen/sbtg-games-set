@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<package version="0.0.1" uuid="sbt-games">
+<package version="0.0.3" uuid="sbt-games">
  <names>
   <name lang="en_US">SBT Games</name>
  </names>
@@ -11,6 +11,14 @@
  </descriptionLanguages>
  <contents>
   <behaviorContent path="main">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+  <behaviorContent path="animations/janken">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+  <behaviorContent path="animations/janken_repeat">
    <nature>interactive</nature>
    <permissions/>
   </behaviorContent>

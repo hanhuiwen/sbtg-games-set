@@ -4,17 +4,17 @@ var naoChoice = null;
 var quitting = false;
 var is_draw = false;
 
-var choices = ["jk_stone", "jk_scissors", "jk_paper"];
+var choices = ["jk_rock", "jk_scissors", "jk_paper"];
 
 var reactions = {
     "intro": [ //1
-        "Let's play Janken! \\pau=800\\ You can choose your move on the tablet when I say \\pau=500\\ jan ken pow. \\pau=800\\ I promise I won't look at your choice. \\pau=800\\ If it's a draw, we will repeat until someone wins. \\pau=800\\ Let's start!"
+        "Let's play Janken! \\pau=800\\ You can choose your move on the tablet when I am saying \\pau=300\\ jan ken pow. \\pau=800\\ I promise I will not look at your choice. \\pau=800\\ If it's a draw, we will repeat until someone wins. \\pau=800\\ Let's start!"
     ],
     "janken": [ // 1
-        "\\rspd=80\\ sigh showa goo \\pau=800\\ jan \\pau=800\\ ken \\pau=800\\ \\vct=120\\ po!"
+        "^start(sbt-games/animations/janken) \\rspd=80\\ sigh showa goo \\pau=800\\ jan \\pau=800\\ ken \\pau=800\\ \\vct=120\\ pow! ^wait(sbt-games/animations/janken)"
     ],
     "aiko": [ // 1
-        "\\rspd=80\\ I cow desho"
+        "^start(sbt-games/animations/janken_repeat) \\rspd=70\\ I \\pau=500\\ coal \\pau=500\\ de \\pau=500\\ sho ^wait(sbt-games/animations/janken_repeat)"
     ],
     "win": [ // 5
         "I win! ^run(animations/Stand/Emotions/Positive/Winner_1)",
@@ -34,6 +34,18 @@ var reactions = {
     ],
     "play_again_question": [ // 1
         "do you want to play again?"
+    ],
+    "timeout": [ // 2?
+        "you have to choose before I finish my saying jan ken pow."
+    ],
+    "jk_rock": [
+        "I chose rock!"
+    ],
+    "jk_scissors": [
+        "I chose scissors!"
+    ],
+    "jk_paper": [
+        "I chose paper!"
     ]
 }
 
@@ -51,12 +63,15 @@ function userClick (evt) {
 }
 
 function main () {
-    $("#ttt_play_again").addClass("hidden");
+    $(".view").addClass("hidden");
     $("#jk_main").removeClass("hidden");
     $(".jk_choice").removeClass("jk_selected");
     userChoice = null;
     started = true;
     naoChoice = choices[randRange(0, 3)];
+    $.getService("ALMemory", function (memory) {
+        memory.insertData("SBTGames/Janken/NaoChoice", naoChoice);
+    });
     if (is_draw) {
         playReaction("aiko", checkResult);
     } else {
@@ -68,45 +83,45 @@ function checkResult () {
     started = false;
     is_draw = false;
     if (userChoice==null) {
-        console.log("too slow!");
-        tryAgainQuestion();
-    } else if (userChoice == naoChoice) {
-        is_draw = true;
-        playReaction("draw", main);
-    } else if (userWin(userChoice, naoChoice)) {
-        playReaction("lose", tryAgainQuestion);
+        playReaction("timeout", tryAgainQuestion);
     } else {
-        playReaction("win", tryAgainQuestion);
+        showResults();
+        playReaction(naoChoice, function () {
+            if (userChoice == naoChoice) {
+                is_draw = true;
+                playReaction("draw", main);
+            } else if (userWin(userChoice, naoChoice)) {
+                $("#jk_user_win").show()
+                playReaction("lose", tryAgainQuestion);
+            } else {
+                $("#jk_nao_win").show()
+                playReaction("win", tryAgainQuestion);
+            }
+        });
     }
 }
 
 function userWin(user, nao) {
     // draw was checked before call to this function!
-    if (user == "jk_stone" && nao == "jk_scissors") {
+    if (user == "jk_rock" && nao == "jk_scissors") {
         return true;
     } else if (user == "jk_scissors" && nao == "jk_paper") {
         return true;
-    } else if (user == "jk_paper" && nao == "jk_stone") {
+    } else if (user == "jk_paper" && nao == "jk_rock") {
         return true;
     } else {
         return false;
     }
 }
 
-function draw () {
-    userChoice = null;
-    naoChoice = choices[randRange(0, 3)];
-    // anim: ai ko desho => back to check result
-}
-
-function win () {
-    // say: you win!
-    // then go to "again"
-}
-
-function lose () {
-    // say: you lose!
-    // then go to "again"
+function showResults() {
+    $("#jk_main").animateCss('fadeOut', function () {
+        $(".view").addClass("hidden");
+        $("#jk_user_choice").attr("class", "jk_choice " + userChoice);
+        $("#jk_nao_choice").attr("class", "jk_choice " + naoChoice);
+        $("#jk_result").removeClass("hidden");
+        $("#jk_result").animateCss('fadeIn');
+    });
 }
 
 function playReaction (type, callback) {
@@ -137,8 +152,21 @@ function backToMenu() {
 function tryAgainQuestion() {
     $("#jk_main").addClass("hidden");
     $("#ttt_play_again").removeClass("hidden");
+    $(".fixed_image").hide();
     playReaction("play_again_question");
 }
+
+$.fn.extend({
+    animateCss: function (animationName, callback) {
+        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        this.addClass('animated ' + animationName).one(animationEnd, function() {
+            $(this).removeClass('animated ' + animationName);
+            if (callback != null) {
+                callback(this);
+            }
+        });
+    }
+});
 
 $(function () {
     $("#jk_main").on("click", ".jk_choice", userClick);
