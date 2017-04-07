@@ -17,11 +17,17 @@ var reactions = {
         "^start(sbt-games/animations/janken_repeat) \\rspd=70\\ I \\pau=500\\ coal \\pau=500\\ de \\pau=500\\ sho ^wait(sbt-games/animations/janken_repeat)"
     ],
     "win": [ // 5
-        "I win! ^run(animations/Stand/Emotions/Positive/Winner_1)",
-        "Yes! I win! ^run(animations/Stand/Emotions/Positive/Winner_2)"
+        "\\style=joyful\\ I win! ^run(animations/Stand/Emotions/Positive/Winner_1) \\style=neutral\\",
+        "\\style=joyful\\ Yes! I win! ^run(animations/Stand/Emotions/Positive/Winner_2) \\style=neutral\\",
+        "\\style=joyful\\ I win! Better luck next time! ^run(animations/Stand/Emotions/Positive/Happy_2) \\style=neutral\\",
+        "\\style=joyful\\ oh yeah! I win ^run(animations/Stand/Emotions/Positive/Winner_1) \\style=neutral\\",
+        "\\style=joyful\\ I am the winner! ^run(animations/Stand/Emotions/Positive/Happy_2) \\style=neutral\\"
     ],
     "lose": [ // 4
-        "wow! ^start(animations/Stand/Emotions/Positive/Excited_1) Congratulations! You win! ^wait(animations/Stand/Emotions/Positive/Excited_1)"
+        "\\style=joyful\\ wow! ^start(animations/Stand/Emotions/Positive/Excited_1) Congratulations! You win! ^wait(animations/Stand/Emotions/Positive/Excited_1) \\style=neutral\\",
+        "\\style=joyful\\ you win, champion! ^run(animations/Stand/Emotions/Positive/Happy_1) \\style=neutral\\",
+        "\\style=joyful\\ you win! ^start(animations/Stand/Emotions/Positive/Excited_1) you are the best! ^wait(animations/Stand/Emotions/Positive/Excited_1) \\style=neutral\\",
+        "\\style=joyful\\ ^start(animations/Stand/Emotions/Positive/Excited_1) you win! \\pau=600\\ you are really good at this! ^wait(animations/Stand/Emotions/Positive/Excited_1) \\style=neutral\\"
     ],
     "draw": [ // 1
         "It's a draw! Again!"

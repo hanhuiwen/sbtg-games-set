@@ -88,15 +88,17 @@ function nextTurn() {
     if (started) {
         if (checkWin() != undefined) {
             if (whoseTurn == "user") {
+                $("#ttt_user_win").show();
                 playReaction("lose", tryAgainQuestion);
             } else {
+                $("#ttt_nao_win").show();
                 playReaction("win", tryAgainQuestion);
             }
-            // TODO: css animation!
             console.log(checkWin());
             started = false;
             return;
         } else if (checkFull()) {
+            $("#ttt_draw").show();
             playReaction("draw", tryAgainQuestion);
             started = false;
             return;
@@ -218,27 +220,48 @@ function userClick (evt) {
 // Nao code
 
 var reactions = {
-    "thinking": [ // 8
-        "^start(animations/Stand/Waiting/Think_2) \\rspd=80\\ \\vct=90\\ hmmm. \\vct=110\\ Let me think ^wait(animations/Stand/Waiting/Think_2)",
-        "^start(animations/Stand/Waiting/Think_3) \\rspd=80\\ \\vct=100\\ Maybe if I do this. \\pau=800\\ \\rspd=100\\ or perhaps that? ^wait(animations/Stand/Waiting/Think_3)"
+    "thinking": [ // 7
+        "^start(animations/Stand/Waiting/Think_2) \\rspd=80\\ \\vct=90\\ hmmm. \\vct=110\\ Let me think",
+        "^start(animations/Stand/Waiting/Think_3) \\rspd=80\\ \\vct=100\\ Maybe if I do this. \\pau=800\\ \\rspd=100\\ or perhaps that?",
+        "What's next?",
+        "\\rspd=80\\ recompiling strategy software!",
+        "\\rspd=80\\ searching for move!",
+        "\\rspd=80\\ what should I do?",
+        "this is harder than expected"
     ],
-    "postplay": [ // 6
+    "postplay": [ // 7
         "I see. Nicely done!",
-        "hmmm. That was unexpected!"
+        "hmmm. That was unexpected!",
+        "now I have to recompute my whole strategy!",
+        "uh oh!",
+        "oh! \\pau=500\\ ooh",
+        "oh! \\pau=500\\ I know what you're doing",
+        "\\style=joyful\\ Nice move! \\style=neutral\\"
     ],
     "preplay": [ // 5
         "Aha! What do you say to that!",
-        "\\rspd=50\\ \\vct=90\\ I choose, \\pau=700\\ \\rspd=130\\ \\vct=100\\ this one!"
+        "\\rspd=50\\ \\vct=90\\ I choose, \\pau=700\\ \\rspd=130\\ \\vct=100\\ this one!",
+        "that should do it!",
+        "you can't beat that!",
+        "that's the spot"
     ],
     "win": [ // 5
-        "I win! ^run(animations/Stand/Emotions/Positive/Winner_1)",
-        "Yes! I win! ^run(animations/Stand/Emotions/Positive/Winner_2)"
+        "\\style=joyful\\ I win! ^run(animations/Stand/Emotions/Positive/Winner_1) \\style=neutral\\",
+        "\\style=joyful\\ Yes! I win! ^run(animations/Stand/Emotions/Positive/Winner_2) \\style=neutral\\",
+        "\\style=joyful\\ I win! Better luck next time! ^run(animations/Stand/Emotions/Positive/Happy_2) \\style=neutral\\",
+        "\\style=joyful\\ oh yeah! I win ^run(animations/Stand/Emotions/Positive/Winner_1) \\style=neutral\\",
+        "\\style=joyful\\ I am the winner! ^run(animations/Stand/Emotions/Positive/Happy_2) \\style=neutral\\"
     ],
     "lose": [ // 4
-        "wow! ^start(animations/Stand/Emotions/Positive/Excited_1) Congratulations! You win! ^wait(animations/Stand/Emotions/Positive/Excited_1)"
+        "\\style=joyful\\ wow! ^start(animations/Stand/Emotions/Positive/Excited_1) Congratulations! You win! ^wait(animations/Stand/Emotions/Positive/Excited_1) \\style=neutral\\",
+        "\\style=joyful\\ you win, champion! ^run(animations/Stand/Emotions/Positive/Happy_1) \\style=neutral\\",
+        "\\style=joyful\\ you win! ^start(animations/Stand/Emotions/Positive/Excited_1) you are the best! ^wait(animations/Stand/Emotions/Positive/Excited_1) \\style=neutral\\",
+        "\\style=joyful\\ ^start(animations/Stand/Emotions/Positive/Excited_1) you win! \\pau=600\\ you are really good at this! ^wait(animations/Stand/Emotions/Positive/Excited_1) \\style=neutral\\"
+
     ],
     "draw": [ // 2
-        "It's a draw! we should try again to see who wins"
+        "It's a draw! we should try again to see who wins",
+        "It's a draw! you must be a genius just like me!"
     ],
     "quit": [ // 1
         "that was fun! let's play again sometimes."
@@ -247,7 +270,7 @@ var reactions = {
         "Ok, let's start again!"
     ],
     "start": [ // 1
-        "alright, you start!"
+        "Let's play tick tack toe! You can touch the screen to choose where to play! alright, you start!"
     ],
     "play_again_question": [ // 1
         "do you want to play again?"
@@ -255,7 +278,7 @@ var reactions = {
 }
 
 probabilities = {
-    "thinking": 0.8,
+    "thinking": 0.4,
     "postplay": 0.5,
     "preplay": 0.4
 }
@@ -264,7 +287,7 @@ function playReaction (type, callback) {
     var reactionList = reactions[type];
     var reaction = reactionList[randRange(0, reactionList.length)];
     // reinitialize to default just in case
-    reaction = "\\vct=100\\ \\rspd=100\\" + reaction;
+    reaction = "\\vct=100\\ \\rspd=90\\" + reaction;
     $.getService("ALAnimatedSpeech", function (tts) {
         tts.say(reaction).done(callback);
     });
@@ -277,6 +300,7 @@ function backToMenu() {
 }
 
 function tryAgainQuestion() {
+    $(".fixed_image").hide();
     $("#ttt_main").addClass("hidden");
     $("#ttt_play_again").removeClass("hidden");
     playReaction("play_again_question");

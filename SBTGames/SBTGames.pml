@@ -23,9 +23,6 @@
         <File name="tickTackToe" src="html/js/tickTackToe.js" />
         <File name="tick-tack-toe" src="html/tick-tack-toe.html" />
         <File name="janken" src="html/css/janken.css" />
-        <File name="paper" src="html/img/paper.png" />
-        <File name="rock" src="html/img/rock.png" />
-        <File name="scissors" src="html/img/scissors.png" />
         <File name="janken" src="html/janken.html" />
         <File name="janken" src="html/js/janken.js" />
         <File name="animate" src="html/css/animate.css" />
@@ -35,6 +32,7 @@
         <File name="rock2" src="html/img/rock2.png" />
         <File name="scissors2" src="html/img/scissors2.png" />
         <File name="userWin" src="html/img/userWin.png" />
+        <File name="" src="html/img/.DS_Store" />
     </Resources>
     <Topics />
     <IgnoredPaths />
